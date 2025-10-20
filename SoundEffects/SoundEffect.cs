@@ -24,14 +24,13 @@ namespace Soundboard.SoundEffects
         {
             this.fileReader = new AudioFileReader(filePath);
             this.waveOut = new ();
+            waveOut.Volume = 0.5f;
             waveOut.Init(fileReader);
         }
 
         public SoundEffect(string filePath, int device)
+            : this(filePath)
         {
-            this.fileReader = new AudioFileReader(filePath);
-            this.waveOut = new ();
-            waveOut.Init(fileReader);
             waveOut.DeviceNumber = device;
         }
 

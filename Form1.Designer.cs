@@ -49,7 +49,6 @@
             Controls.Add(PlayButton);
             Name = "Form1";
             Text = "Form1";
-            KeyDown += Form1_KeyDown;
             ResumeLayout(false);
         }
 

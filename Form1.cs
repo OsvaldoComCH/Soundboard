@@ -1,4 +1,5 @@
 using NAudio.Wave;
+using Soundboard.AudioInput;
 using Soundboard.InputReader;
 using Soundboard.SoundEffects;
 
@@ -6,16 +7,21 @@ namespace Soundboard
 {
     public partial class Form1 : Form
     {
+        private AudioInputPlayback Playback;
+
         public Form1()
         {
             InitializeComponent();
             KeyboardHookManager.StartHook();
-            KeyboardInputHandler.OnKeyPress += Form1_KeyDown;
+            KeyboardInputHandler.OnKeyPress += InputEventHandler;
+            Playback = new();
+            Playback.Start();
         }
 
         public static void PlaySound()
         {
-            var sfx = new SoundEffectPlayer("Bad To The Bone.mp3");
+            //var sfx = new SoundEffectPlayer("Bad To The Bone.mp3");
+            var sfx = new SoundEffectPlayer("Bone.mp3");
 
             sfx.PlayAsync()
                 .ContinueWith((x) =>
@@ -29,7 +35,7 @@ namespace Soundboard
             PlaySound();
         }
 
-        private void Form1_KeyDown(object? sender, KeyEventArgs e)
+        private void InputEventHandler(object? sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -42,6 +48,8 @@ namespace Soundboard
         ~Form1()
         {
             KeyboardHookManager.StopHook();
+            Playback.Stop();
+            Playback.Dispose();
         }
     }
 }
