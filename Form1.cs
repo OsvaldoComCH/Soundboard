@@ -10,6 +10,7 @@ namespace Soundboard
         {
             InitializeComponent();
             KeyboardHookManager.StartHook();
+            KeyboardInputHandler.OnKeyPress += Form1_KeyDown;
         }
 
         public static void PlaySound()
@@ -23,17 +24,17 @@ namespace Soundboard
                 });
         }
 
-        private void PlayButton_Click(object sender, EventArgs e)
+        private void PlayButton_Click(object? sender, EventArgs e)
         {
             PlaySound();
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyDown(object? sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.Z:
-                    PlayButton_Click((object)sender, e);
+                    PlayButton_Click(sender, e);
                     break;
             }
         }

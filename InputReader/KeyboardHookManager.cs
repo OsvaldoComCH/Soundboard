@@ -11,6 +11,7 @@ namespace Soundboard.InputReader
     {
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
+        private const int WM_SYSKEYDOWN = 0x0104;
 
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
@@ -29,6 +30,9 @@ namespace Soundboard.InputReader
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll")]
+        public static extern short GetAsyncKeyState(Keys vKey);
 
         public static void StartHook()
         {
@@ -51,13 +55,23 @@ namespace Soundboard.InputReader
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN))
+            if (nCode >= 0 && (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN))
             {
-                int vkCode = Marshal.ReadInt32(lParam);
-                if ((Keys)vkCode == Keys.Z)
+                Keys vkCode = (Keys)Marshal.ReadInt32(lParam);
+                if ((GetAsyncKeyState(Keys.ShiftKey) & 0x8000) != 0)
                 {
-                    Form1.PlaySound();
+                    vkCode |= Keys.Shift;
                 }
+                if ((GetAsyncKeyState(Keys.ControlKey) & 0x8000) != 0)
+                {
+                    vkCode |= Keys.ControlKey;
+                }
+                if ((GetAsyncKeyState(Keys.Menu) & 0x8000) != 0)
+                {
+                    vkCode |= Keys.Alt;
+                }
+
+                KeyboardInputHandler.RaiseEvent(vkCode);
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }

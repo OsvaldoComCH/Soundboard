@@ -8,12 +8,12 @@ namespace Soundboard.InputReader
 {
     public class KeyboardInputHandler
     {
-        public event EventHandler<KeyEventArgs> OnKeyPress = new ((a, b) => { });
+        public static event EventHandler<KeyEventArgs> OnKeyPress = new ((a, b) => { });
 
-        public void RaiseEvent(Keys key, SysKeys sysKeys)
+        public static void RaiseEvent(Keys key)
         {
             var args = new KeyEventArgs(key);
-            OnKeyPress.Invoke(null, key)
+            OnKeyPress.Invoke(null, args);
         }
     }
 }
