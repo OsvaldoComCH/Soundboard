@@ -1,15 +1,15 @@
 using NAudio.Wave;
-using Soundboard.AudioInput;
+using Soundboard.Playback;
 using Soundboard.InputReader;
 using Soundboard.SoundEffects;
 
 namespace Soundboard
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private AudioInputPlayback Playback;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             KeyboardHookManager.StartHook();
@@ -45,7 +45,7 @@ namespace Soundboard
             }
         }
 
-        ~Form1()
+        ~MainForm()
         {
             KeyboardHookManager.StopHook();
             Playback.Stop();
