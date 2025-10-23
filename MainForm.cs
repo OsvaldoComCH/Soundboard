@@ -40,7 +40,12 @@ namespace Soundboard
             switch (e.KeyCode)
             {
                 case Keys.Z:
-                    PlayButton_Click(sender, e);
+                    {
+                        if (e.Alt)
+                        {
+                            PlayButton_Click(sender, e);
+                        }
+                    }
                     break;
             }
         }

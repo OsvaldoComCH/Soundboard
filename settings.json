@@ -1,0 +1,28 @@
+{
+  "General": {
+    "DJModeBind": "alt+numpad0",
+    "QuickMenuBind": "ctrl+alt+m",
+    "SfxDir": "C:/Users/User/Documents/Soundboard/SoundEffects"
+    "CopyFiles": true
+  },
+  "SoundEffectOutputs": [
+    {
+      "DeviceName": "Auto Falantes",
+      "Volume": 1.0,
+      "Enabled": true
+    },
+    {
+      "DeviceName": "Virtual Audio Cable",
+      "Volume": 1.0,
+      "Enabled": true
+    }
+  ],
+  "AudioPlaybacks": [
+    {
+      "InputDeviceName": "Grupo de Microfones",
+      "OutputDeviceName": "Virtual Audio Cable",
+      "Volume": 2.0,
+      "Enabled": false
+    }
+  ]
+}

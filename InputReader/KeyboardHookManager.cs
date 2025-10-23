@@ -13,8 +13,8 @@ namespace Soundboard.InputReader
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_SYSKEYDOWN = 0x0104;
 
-        private static LowLevelKeyboardProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
+        private static LowLevelKeyboardProc Proc = HookCallback;
+        private static IntPtr HookID = IntPtr.Zero;
 
         public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
@@ -36,12 +36,12 @@ namespace Soundboard.InputReader
 
         public static void StartHook()
         {
-            _hookID = SetHook(_proc);
+            HookID = SetHook(Proc);
         }
 
         public static void StopHook()
         {
-            UnhookWindowsHookEx(_hookID);
+            UnhookWindowsHookEx(HookID);
         }
 
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
@@ -73,7 +73,7 @@ namespace Soundboard.InputReader
 
                 KeyboardInputHandler.RaiseEvent(vkCode);
             }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            return CallNextHookEx(HookID, nCode, wParam, lParam);
         }
     }
 }
